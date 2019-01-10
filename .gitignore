@@ -1,0 +1,17 @@
+# Dependency directories
+node_modules/
+
+# Build directory
+build/
+Build/
+
+# Expo
+.expo
+.expo-shared
+
+# dotenv environment variables file
+.env
+
+# Misc
+.DS_Store
+Thumbs.db
