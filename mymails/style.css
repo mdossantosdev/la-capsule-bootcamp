@@ -40,3 +40,8 @@ h6 {
 .last-row{
   border-bottom: 1px solid #DFDFDF;
 }
+
+#count {
+  font-weight: 600;
+  margin-left: 10px;
+}
