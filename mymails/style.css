@@ -1,12 +1,5 @@
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  background-color: #F6F7FB;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  padding: 0;
 }
 
 h6 {
@@ -14,34 +7,82 @@ h6 {
   margin: 0px;
 }
 
-.trash {
-  width: 15px;
-  margin-left: 15px;
-}
-
-.avatar{
-  width: 60px;
-  border-radius: 50%;
-  margin-right: 15px;
+.container-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F6F7FB;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 }
 
 .row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width : 50%;
+  padding: 15px;
   border-top: 1px solid #DFDFDF;
   border-right: 1px solid #DFDFDF;
   border-left: 1px solid #DFDFDF;
   background-color: #FFFFFF;
-  width : 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-}
-
-.last-row{
-  border-bottom: 1px solid #DFDFDF;
 }
 
 #count {
   font-weight: 600;
   margin-left: 10px;
+}
+
+.input-message {
+  width: 80%;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #DFDFDF;
+  border-radius: 20px;
+}
+
+.add-btn-message {
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #28B9B5;
+  border: 1px solid #28B9B5;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.add-btn-message:hover {
+  background-color: #28B9B5;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.add-btn-message:focus,
+.input-message:focus {
+  outline: none;
+}
+
+.trash {
+  width: 15px;
+  margin-left: 15px;
+}
+
+.avatar {
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.last-row {
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.new-last-row {
+  border-top: none;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.content {
+  width: 444px;
 }

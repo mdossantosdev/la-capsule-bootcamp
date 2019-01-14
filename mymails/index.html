@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -9,55 +8,63 @@
   </head>
 
   <body>
-    <div class="row">
-      Messages total: <span id="count">​0</span>
-    </div>
-
-    <div class="row">
-      <img class="avatar" src="images/avatar-1.jpg">
-      <div>
-        <h6>Sherlock Holmes</h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+    <div id="container" class="container-list">
+      <div class="row">
+        Messages total: <span id="count">​0</span>
       </div>
-      <img class="trash" src="images/trash.png">
-    </div>
 
-    <div class="row">
-      <img class="avatar" src="images/avatar-2.jpg">
-      <div>
-        <h6>Elise Watson</h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+      <div class="row" id="search">
+        <input id="input-msg" class="input-message" type="text" placeholder="New message" name="" value="">
+        <button id="add-btn" class="add-btn-message" type="button" name="button">Add</button>
       </div>
-      <img class="trash" src="images/trash.png">
-    </div>
 
-    <div class="row">
-      <img class="avatar" src="images/avatar-3.jpg">
-      <div>
-        <h6>Adam Keval</h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+      <div class="row">
+        <img class="avatar" src="images/avatar-1.jpg">
+        <div class="content">
+          <h6>Sherlock Holmes</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+        </div>
+        <img class="trash" src="images/trash.png">
       </div>
-      <img class="trash" src="images/trash.png">
-    </div>
 
-    <div class="row">
-      <img class="avatar" src="images/avatar-4.jpg">
-      <div>
-        <h6>Alexandra Pozi</h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+      <div class="row">
+        <img class="avatar" src="images/avatar-2.jpg">
+        <div class="content">
+          <h6>Elise Watson</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+        </div>
+        <img class="trash" src="images/trash.png">
       </div>
-      <img class="trash" src="images/trash.png">
-    </div>
 
-    <div class="row last-row">
-      <img class="avatar" src="images/avatar-5.jpg">
-      <div>
-        <h6>Zoe Milot</h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+      <div class="row">
+        <img class="avatar" src="images/avatar-3.jpg">
+        <div class="content">
+          <h6>Adam Keval</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+        </div>
+        <img class="trash" src="images/trash.png">
       </div>
-      <img class="trash" src="images/trash.png">
+
+      <div class="row">
+        <img class="avatar" src="images/avatar-4.jpg">
+        <div class="content">
+          <h6>Alexandra Pozi</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+        </div>
+        <img class="trash" src="images/trash.png">
+      </div>
+
+      <div class="row last-row">
+        <img class="avatar" src="images/avatar-5.jpg">
+        <div class="content">
+          <h6>Zoe Milot</h6>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, sed?</p>
+        </div>
+        <img class="trash" src="images/trash.png">
+      </div>
     </div>
 
     <script src="script.js"></script>
   </body>
+
 </html>
