@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <% include ../partials/head %>
+
+  <body>
+    <div class="container">
+
+      <% include ../partials/header %>
+
+      <div class="row hero-image"></div>
+
+      <div class="row">
+        <% for (let bike of dataBike){ %>
+        <div class="col-12 col-sm-6 col-md-4 bike-card">
+          <div class="card text-center">
+            <img class="card-img-top" src="<%= bike.url %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= bike.name %></h5>
+              <span class="shop-price"><%= bike.price %>€</span>
+              <a href="/cart" class="btn btn-outline-info btn-sm">Buy</a>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+    </div>
+
+    <% include ../partials/script %>
+  </body>
+</html>
