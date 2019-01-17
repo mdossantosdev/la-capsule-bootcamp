@@ -33,6 +33,12 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.price-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .shop-price {
   font-size: 1.6rem;
   font-weight: 700;

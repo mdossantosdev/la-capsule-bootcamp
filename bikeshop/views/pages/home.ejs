@@ -17,8 +17,16 @@
             <img class="card-img-top" src="<%= bike.url %>">
             <div class="card-body">
               <h5 class="card-title"><%= bike.name %></h5>
-              <span class="shop-price"><%= bike.price %>€</span>
-              <a href="/cart" class="btn btn-outline-info btn-sm">Buy</a>
+              <div class="price-button">
+                <span class="shop-price"><%= bike.price %>€</span>
+                <form action="/add-bike" method="POST">
+                  <input type="hidden" name="bikeName" value="<%= bike.name %>">
+                  <input type="hidden" name="bikePrice" value="<%= bike.price %>">
+                  <input type="hidden" name="bikeImage" value="<%= bike.url %>">
+                  <input type="hidden" name="bikeQuantity" value="1">
+                  <button type="submit" class="btn btn-outline-info btn-lg" name="button">Buy</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
