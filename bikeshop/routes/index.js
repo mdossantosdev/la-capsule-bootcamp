@@ -22,28 +22,52 @@ router.get('/cart', (req, res) => {
 });
 
 /* POST */
+
+// Add bike to cart
 router.post('/add-bike', (req, res) => {
 
-  shoppingCart.push({
+  // Data bike
+  const bike = {
     name: req.body.bikeName,
     price: req.body.bikePrice,
     url: req.body.bikeImage,
     quantity: req.body.bikeQuantity,
-  });
+  };
+
+  let canUpdate = false;
+
+  for (let bike of shoppingCart) {
+    if (req.body.bikeName === bike.name) {
+      canUpdate = true;
+      bike.quantity++;
+    }
+  };
+
+  if (canUpdate === false) {
+    // Add product in cart
+    shoppingCart.push(bike);
+  };
 
   res.redirect('/cart');
 });
 
+// Delete bike from cart
 router.post('/delete-bike', (req, res) => {
-  let position = req.body.position;
+  const position = req.body.position;
 
+  // Splice the product from cart array
   shoppingCart.splice(position, 1);
 
   res.redirect('/cart');
 });
 
-router.post('/update-product', (req, res) => {
-  shoppingCart[req.body.position].quantity = req.body.quantity;
+// Update number of bikes
+router.post('/update-bike', (req, res) => {
+  const position = req.body.position;
+  const quantity = req.body.quantity;
+
+  // Delete the product from the cart if quantity = 0
+  quantity == 0 ? shoppingCart.splice(position, 1) : shoppingCart[position].quantity = quantity;
 
   res.redirect('/cart');
 });
