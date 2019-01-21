@@ -3,10 +3,24 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 
 const app = express();
+
+// Session
+app.use(
+  session({
+    secret: 'a4f8071f-c873-4447-8ee2',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000,
+      httpOnly: true
+    }
+  })
+);
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views/pages'));

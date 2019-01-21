@@ -8,6 +8,10 @@ body {
   margin: 0;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 /* Header */
 .shop-header {
   background-color: #343A40;

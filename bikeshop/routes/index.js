@@ -10,15 +10,25 @@ const dataBike = [
   { name: 'Model AMIG39', price: 599, url: '/images/bike-6.jpg' },
 ];
 
-const shoppingCart = [];
-
 /* GET */
 router.get('/', (req, res) => {
+
+  // Check Cart or Init Cart
+  if (req.session.shoppingCart === undefined) {
+    req.session.shoppingCart = [];
+  }
+
   res.render('home', { dataBike });
 });
 
 router.get('/cart', (req, res) => {
-  res.render('cart', { shoppingCart });
+
+  // Check Cart or Init Cart
+  if (req.session.shoppingCart === undefined) {
+    req.session.shoppingCart = [];
+  }
+
+  res.render('cart', { shoppingCart: req.session.shoppingCart });
 });
 
 /* POST */
@@ -31,12 +41,12 @@ router.post('/add-bike', (req, res) => {
     name: req.body.bikeName,
     price: req.body.bikePrice,
     url: req.body.bikeImage,
-    quantity: req.body.bikeQuantity,
+    quantity: parseInt(req.body.bikeQuantity),
   };
 
   let canUpdate = false;
 
-  for (let bike of shoppingCart) {
+  for (const bike of req.session.shoppingCart) {
     if (req.body.bikeName === bike.name) {
       canUpdate = true;
       bike.quantity++;
@@ -45,7 +55,7 @@ router.post('/add-bike', (req, res) => {
 
   if (canUpdate === false) {
     // Add product in cart
-    shoppingCart.push(bike);
+    req.session.shoppingCart.push(bike);
   };
 
   res.redirect('/cart');
@@ -56,7 +66,7 @@ router.post('/delete-bike', (req, res) => {
   const position = req.body.position;
 
   // Splice the product from cart array
-  shoppingCart.splice(position, 1);
+  req.session.shoppingCart.splice(position, 1);
 
   res.redirect('/cart');
 });
@@ -64,10 +74,10 @@ router.post('/delete-bike', (req, res) => {
 // Update number of bikes
 router.post('/update-bike', (req, res) => {
   const position = req.body.position;
-  const quantity = req.body.quantity;
+  const quantity = parseInt(req.body.quantity);
 
   // Delete the product from the cart if quantity = 0
-  quantity == 0 ? shoppingCart.splice(position, 1) : shoppingCart[position].quantity = quantity;
+  quantity === 0 ? req.session.shoppingCart.splice(position, 1) : req.session.shoppingCart[position].quantity = quantity;
 
   res.redirect('/cart');
 });
