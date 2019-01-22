@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <% include ../partials/head %>
+
+  <body>
+    <div class="container">
+      <% include ../partials/header %>
+
+      <div class="row">
+        <div class="col-sm-12 offset-lg-6 col-lg-6 container-search">
+          <form class="form-inline">
+            <h5 class="title-search">City</h5>
+            <div class="form-group mx-sm-3 mb-2">
+              <input type="text" class="form-control-lg input-search" placeholder="Paris, Bordeaux...">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 button-search">Save</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-lg-6">
+          <img class="map" src="./images/map.png" alt="Map">
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+          <div class="list-group col-sm-12">
+
+            <div class="list-group-item list-group-item-action card-meteo">
+              <div class="col-2">
+                <span class="card-title">Paris</span>
+              </div>
+              <div class="offset-1 col-7">
+                <span>Cloudy</span>
+                <img src="/images/picto-1.png" alt="meteo">
+                <span class="badge badge-pill badge-secondary">2°C</span>
+                <span class="badge badge-pill badge-warning">19°C</span>
+              </div>
+              <div class="offset-1 col-1">
+                <a href="#"><i class="far fa-times-circle icon-delete"></i></a>
+              </div>
+            </div>
+
+            <div class="list-group-item list-group-item-action card-meteo">
+              <div class="col-2">
+                <span class="card-title">Bordeaux</span>
+              </div>
+              <div class="offset-1 col-7">
+                <span>Cloudy</span>
+                <img src="/images/picto-1.png" alt="meteo">
+                <span class="badge badge-pill badge-secondary">4°C</span>
+                <span class="badge badge-pill badge-warning">12°C</span>
+              </div>
+              <div class="offset-1 col-1">
+                <a href="#"><i class="far fa-times-circle icon-delete"></i></a>
+              </div>
+            </div>
+
+            <div class="list-group-item list-group-item-action card-meteo">
+              <div class="col-2">
+                <span class="card-title">Lyon</span>
+              </div>
+              <div class="offset-1 col-7">
+                <span>Cloudy</span>
+                <img src="/images/picto-1.png" alt="meteo">
+                <span class="badge badge-pill badge-secondary">0°C</span>
+                <span class="badge badge-pill badge-warning">10°C</span>
+              </div>
+              <div class="offset-1 col-1">
+                <a href="#"><i class="far fa-times-circle icon-delete"></i></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../partials/script %>
+  </body>
+</html>

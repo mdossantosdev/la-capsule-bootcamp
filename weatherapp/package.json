@@ -1,0 +1,17 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "ejs": "~2.5.7",
+    "express": "^4.16.0",
+    "http-errors": "~1.7.1",
+    "morgan": "~1.9.0"
+  }
+}
