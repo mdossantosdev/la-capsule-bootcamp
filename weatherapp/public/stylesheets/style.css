@@ -48,14 +48,17 @@ html {
   border-radius: .5rem;
 }
 
-.button-search {
+.btn-search {
   border: none;
   padding: .8rem 1.5rem;
   background-color: rgb(255, 191, 67);
 }
 
-.button-search:hover {
-  background-color: rgb(255, 140, 67);
+.btn-search:hover,
+.btn-search:active,
+.btn-search:focus {
+  background-color: rgb(255, 140, 67) !important;
+  outline: 0;
 }
 
 /* Card */
@@ -73,9 +76,22 @@ html {
   font-weight: 700;
 }
 
+.card-description {
+  font-size: .9rem;
+  margin-right: .4rem;
+}
+
 .badge {
   padding: .4rem .8rem;
-  margin-left: .5rem;
+  margin-left: .4rem;
+}
+
+.btn-delete,
+.btn-delete:focus {
+  border: none;
+  padding: 0;
+  outline:0;
+  background-color: transparent;
 }
 
 .icon-delete {
@@ -96,5 +112,9 @@ html {
 
   .button-search {
     padding: .5rem .8rem;
+  }
+
+  .card-title {
+    font-size: .8rem;
   }
 }

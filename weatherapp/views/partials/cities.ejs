@@ -1,0 +1,27 @@
+<div class="col-sm-12 col-lg-6">
+  <div class="list-group col-sm-12">
+
+    <% for (let i = 0; i < cityList.length; i++) { %>
+      <div class="list-group-item list-group-item-action card-meteo">
+        <div class="col-3">
+          <span class="card-title"><%= cityList[i].name %></span>
+        </div>
+        <div class="col-8">
+          <span class="card-description"><%= cityList[i].description %></span>
+          <img src="/images/<%= cityList[i].image %>" alt="meteo">
+          <span class="badge badge-pill badge-info"><%=  cityList[i].temp_min %>°C</span>
+          <span class="badge badge-pill badge-warning"><%= cityList[i].temp_max %>°C</span>
+        </div>
+        <div class="col-1">
+          <form action="/delete-city" method="POST">
+            <input type="hidden" name="position" value="<%= i %>">
+            <button type="submit" class="btn-delete">
+              <i class="far fa-times-circle icon-delete" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    <% } %>
+
+  </div>
+</div>
