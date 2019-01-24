@@ -79,6 +79,11 @@ html {
 .card-description {
   font-size: .9rem;
   margin-right: .4rem;
+  text-transform: capitalize;
+}
+
+.card-img {
+  width: 3.5rem;
 }
 
 .badge {

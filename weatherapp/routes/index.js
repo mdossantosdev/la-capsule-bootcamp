@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
-const cityList = [
-  { name: 'Paris', description: 'Cloudy', image: 'picto-1.png', temp_min: 8, temp_max:19 },
-  { name: 'Bordeaux', description: 'Light Rain', image: 'picto-1.png', temp_min: 10, temp_max:20 },
-  { name: 'Lyon', description: 'Sunny', image: 'picto-1.png', temp_min: 16, temp_max:25 },
-];
+const apiKey = process.env.API_KEY;
+
+const cityList = [];
 
 /* GET */
 router.get('/', (req, res) => {
@@ -14,17 +13,29 @@ router.get('/', (req, res) => {
 
 /* POST */
 router.post('/add-city', (req, res) => {
-  const city = {
-    name: 'New York',
-    description: 'Showers',
-    image: 'picto-1.png',
-    temp_min: 7,
-    temp_max: 14,
-  };
+  const query = req.body.inputSearch;
 
-  cityList.push(city);
+  axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric&lang=fr`)
+    .then((response) => {
+      const data = response.data;
 
-  res.redirect('/');
+      const city = {
+        name: data.name,
+        description: data.weather[0].description,
+        image: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+        tempMin: parseInt(data.main.temp_min),
+        tempMax: parseInt(data.main.temp_max)
+      };
+
+      cityList.push(city);
+
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+
+      if (err) res.redirect('/');
+    })
 });
 
 router.post('/delete-city', (req, res) => {
