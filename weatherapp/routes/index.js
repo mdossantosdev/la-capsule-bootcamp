@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-
 const apiKey = process.env.API_KEY;
-
-const cityList = [];
+const cityModel = require('../models/City');
 
 /* GET */
 router.get('/', (req, res) => {
-  res.render('home', { cityList });
+  cityModel.find((err, cityList) => {
+    res.render('home', { cityList });
+  })
 });
 
 /* POST */
@@ -27,9 +27,11 @@ router.post('/add-city', (req, res) => {
         tempMax: parseInt(data.main.temp_max)
       };
 
-      cityList.push(city);
+      const newCity = new cityModel(city);
 
-      res.redirect('/');
+      newCity.save((err, city) => {
+        res.redirect('/');
+      })
     })
     .catch((err) => {
       console.log(err.response.data);
@@ -39,11 +41,14 @@ router.post('/add-city', (req, res) => {
 });
 
 router.post('/delete-city', (req, res) => {
-  const position = req.body.position;
+  const id = req.body.id;
 
-  cityList.splice(position, 1);
-
-  res.redirect('/');
+  cityModel.deleteOne(
+    { _id: id },
+    (err) => {
+      res.redirect('/');
+    }
+  );
 });
 
 module.exports = router;

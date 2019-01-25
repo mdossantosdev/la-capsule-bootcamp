@@ -14,7 +14,7 @@
         </div>
         <div class="col-1">
           <form action="/delete-city" method="POST">
-            <input type="hidden" name="position" value="<%= i %>">
+            <input type="hidden" name="id" value="<%= cityList[i]._id %>">
             <button type="submit" class="btn-delete">
               <i class="far fa-times-circle icon-delete" aria-hidden="true"></i>
             </button>
