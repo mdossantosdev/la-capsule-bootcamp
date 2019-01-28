@@ -2,12 +2,64 @@ html {
   font-size: 62.5%;
 }
 
+/* Login */
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-size: cover;
+  color: rgb(255, 255, 255);
+}
+
+.login-title {
+  font-size: 3rem;
+}
+
+.form {
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.title-form {
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding-bottom: 1rem;
+  color: rgba(49, 49, 49, 0.9);
+}
+
+.label {
+  font-size: 1.5rem;
+}
+
+.input-form {
+  height: 4rem;
+  text-align: center;
+  border: none !important;
+  border-radius: .5rem;
+  font-size: 1.2rem;
+  color: rgb(255, 255, 255) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.input-form::placeholder {
+  color: rgb(255, 255, 255) !important;
+  opacity: 1 !important;
+}
+
+.btn-login {
+  padding: .8rem 3rem;
+  margin-top: 1.5rem;
+}
+
 /* Header */
 .header {
   display: flex;
   align-items: center;
   padding: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-color: rgb(49, 49, 49);
@@ -23,6 +75,11 @@ html {
   font-size: 2rem;
   font-weight: 700;
   color: rgb(255, 191, 67);
+}
+
+/* Nav */
+.nav-custom {
+  margin-bottom: 2rem;
 }
 
 /* Map */

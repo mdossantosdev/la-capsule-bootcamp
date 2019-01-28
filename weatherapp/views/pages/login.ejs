@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <% include ../partials/head %>
+
+  <body>
+    <div class="container-fluid home">
+      <div class="row">
+
+        <div class="col-12 text-center">
+          <h2 class="login-title">Get started with Weather App!</h2>
+        </div>
+
+        <div class="col-12 col-sm-6 text-center">
+          <div class="form">
+            <h4 class="title-form">Sign Up</h4>
+            <form action="/users/signup" method="POST">
+              <div class="form-group">
+                <label for="signupUsername" class="label">Username</label>
+                <input type="text" class="form-control input-form" name="username" id="signupUsername" placeholder="Enter username">
+              </div>
+              <div class="form-group">
+                <label for="signupEmail" class="label">Email</label>
+                <input type="email" class="form-control input-form" name="email" id="signupEmail" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="signupPassword" class="label">Password</label>
+                <input type="password" class="form-control input-form" name="password" id="signupPassword" placeholder="Enter password">
+              </div>
+              <button type="submit" class="btn btn-info btn-lg btn-login">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 text-center">
+          <div class="form">
+            <h4 class="title-form">Sign In</h4>
+            <form action="/users/signin" method="POST">
+              <div class="form-group">
+                <label for="signinEmail" class="label">Email</label>
+                <input type="email" class="form-control input-form" name="email" id="signinEmail" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="signinPassword" class="label">Password</label>
+                <input type="password" class="form-control input-form" name="password" id="signinPassword" placeholder="Enter password">
+              </div>
+              <button type="submit" class="btn btn-info btn-lg btn-login">Submit</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <% include ../partials/script %>
+  </body>
+</html>

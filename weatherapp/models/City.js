@@ -6,7 +6,7 @@ const CitySchema = mongoose.Schema({
   description: String,
   image: String,
   tempMin: Number,
-  tempMax: Number,
+  tempMax: Number
 });
 
 // Model

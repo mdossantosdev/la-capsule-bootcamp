@@ -16,10 +16,7 @@ const options = {
 mongoose.connect(uri, options);
 
 const db = mongoose.connection;
-db.on(
-  'error',
-  console.error.bind(console, 'Connection error: cannot connect to DB')
-);
+db.on('error', console.error.bind(console, 'Connection error: cannot connect to DB'));
 db.once('open', () => console.log('Connected to the DB 📡'));
 
 module.exports = mongoose;

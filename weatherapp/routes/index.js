@@ -6,8 +6,15 @@ const cityModel = require('../models/City');
 
 /* GET */
 router.get('/', (req, res) => {
+  req.session.user = null;
+  res.render('login');
+});
+
+router.get('/weather', (req, res) => {
+  if (!req.session.user) res.redirect('/');
+
   cityModel.find((err, cityList) => {
-    res.render('home', { cityList });
+    res.render('weather', { cityList, user: req.session.user });
   })
 });
 
@@ -30,13 +37,13 @@ router.post('/add-city', (req, res) => {
       const newCity = new cityModel(city);
 
       newCity.save((err, city) => {
-        res.redirect('/');
+        res.redirect('/weather');
       })
     })
     .catch((err) => {
       console.log(err.response.data);
 
-      if (err) res.redirect('/');
+      if (err) res.redirect('/weather');
     })
 });
 
@@ -46,7 +53,7 @@ router.post('/delete-city', (req, res) => {
   cityModel.deleteOne(
     { _id: id },
     (err) => {
-      res.redirect('/');
+      res.redirect('/weather');
     }
   );
 });
