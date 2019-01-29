@@ -85,7 +85,15 @@ html {
 /* Map */
 .map {
   width: 100%;
+  min-height: 50vh;
   margin-bottom: 2rem;
+}
+
+.markerIcon {
+  font-size: 2.5rem;
+  color: rgb(234, 67, 54);
+  text-align: center;
+  line-height: 0.4rem;
 }
 
 /* Search */

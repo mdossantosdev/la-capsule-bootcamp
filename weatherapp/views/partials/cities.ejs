@@ -1,20 +1,25 @@
 <div class="col-sm-12 col-lg-6">
   <div class="list-group col-sm-12">
 
-    <% for (let i = 0; i < cityList.length; i++) { %>
-      <div class="list-group-item list-group-item-action card-meteo">
+    <% for (const city of cities) { %>
+      <div
+        class="list-group-item list-group-item-action card-meteo"
+        data-name="<%= city.name %>"
+        data-latitude="<%= city.latitude %>"
+        data-longitude="<%= city.longitude %>"
+      >
         <div class="col-3">
-          <span class="card-title"><%= cityList[i].name %></span>
+          <span class="card-title"><%= city.name %></span>
         </div>
         <div class="col-8">
-          <span class="card-description"><%= cityList[i].description %></span>
-          <img class="card-img" src="<%= cityList[i].image %>" alt="meteo">
-          <span class="badge badge-pill badge-info"><%=  cityList[i].tempMin %>°C</span>
-          <span class="badge badge-pill badge-warning"><%= cityList[i].tempMax %>°C</span>
+          <span class="card-description"><%= city.description %></span>
+          <img class="card-img" src="<%= city.image %>" alt="meteo">
+          <span class="badge badge-pill badge-info"><%=  city.tempMin %>°C</span>
+          <span class="badge badge-pill badge-warning"><%= city.tempMax %>°C</span>
         </div>
         <div class="col-1">
           <form action="/delete-city" method="POST">
-            <input type="hidden" name="id" value="<%= cityList[i]._id %>">
+            <input type="hidden" name="id" value="<%= city._id %>">
             <button type="submit" class="btn-delete">
               <i class="far fa-times-circle icon-delete" aria-hidden="true"></i>
             </button>

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const apiKey = process.env.API_KEY;
 const cityModel = require('../models/City');
+const apiKey = process.env.API_KEY;
 
 /* GET */
 router.get('/', (req, res) => {
@@ -11,11 +11,16 @@ router.get('/', (req, res) => {
 });
 
 router.get('/weather', (req, res) => {
-  if (!req.session.user) res.redirect('/');
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
 
-  cityModel.find((err, cityList) => {
-    res.render('weather', { cityList, user: req.session.user });
-  })
+  cityModel.find((err, cities) => {
+    res.render('weather', {
+      cities,
+      user: req.session.user
+    });
+  });
 });
 
 /* POST */
@@ -31,7 +36,9 @@ router.post('/add-city', (req, res) => {
         description: data.weather[0].description,
         image: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
         tempMin: parseInt(data.main.temp_min),
-        tempMax: parseInt(data.main.temp_max)
+        tempMax: parseInt(data.main.temp_max),
+        latitude: data.coord.lat,
+        longitude: data.coord.lon
       };
 
       const newCity = new cityModel(city);

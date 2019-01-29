@@ -36,12 +36,9 @@ router.post('/signup', (req, res) => {
 
 router.post('/signin', (req, res) => {
   userModel.findOne(
-    {
-      email: req.body.email.toLowerCase(),
-      password: req.body.password,
-    },
+    { email: req.body.email.toLowerCase() },
     (err, user) => {
-      if (user) {
+      if (user && user.password == req.body.password) {
         req.session.user = user;
         res.redirect('/weather');
       } else {
