@@ -4,6 +4,7 @@ node_modules/
 # Build directory
 build/
 Build/
+dist/
 
 # Expo
 .expo
