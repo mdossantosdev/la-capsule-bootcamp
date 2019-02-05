@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Col,
   Card,
@@ -10,8 +10,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
-class Movie extends Component {
-  render() {
+const Movie = ({image, title, description}) => {
+
     const styleHeart = {
       color: '#fc6861',
       position: 'absolute',
@@ -24,17 +24,16 @@ class Movie extends Component {
       <Col xs='12' sm='6' md='4' lg='3'>
         <div style={{ marginBottom: 30 }}>
           <Card>
-            <CardImg top width='100%' src='../thumb.jpg' alt='Card image' />
+            <CardImg top width='100%' src={image} alt='Movie image' />
             <FontAwesomeIcon size='2x' style={styleHeart} icon={faHeart} />
-            <CardBody>
-              <CardTitle>Title Movie</CardTitle>
-              <CardText>Movie description</CardText>
+            <CardBody style={{ height: 250 }}>
+              <CardTitle>{title}</CardTitle>
+              <CardText>{description}</CardText>
             </CardBody>
           </Card>
         </div>
       </Col>
     );
-  }
 }
 
 export default Movie;

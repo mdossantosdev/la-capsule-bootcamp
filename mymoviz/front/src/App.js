@@ -38,11 +38,52 @@ class App extends Component {
   }
 
   render() {
-    let movieList = [];
+    // Fake database
+    const moviesDB = [
+      {
+        name: "Life of Pi",
+        description:
+          "The story of an Indian boy named Pi, a zookeeper's son who finds himself in the company of a hyena, zebra, orangutan, and a Bengal tiger ...",
+        image: '/pi.jpg',
+      },
+      {
+        name: 'Maleficent',
+        description:
+          'A beautiful, pure-hearted young woman, Maleficent has an idyllic life growing up in a peaceable forest kingdom, until one day when an invading army ...',
+        image: '/maleficent.jpg',
+      },
+      {
+        name: 'The Adventures of Tintin',
+        description:
+          'Intrepid young reporter, Tintin, and his loyal dog, Snowy, are thrust into a world of high adventure when they discover a ship carrying an explosive ...',
+        image: '/tintin.jpg',
+      },
+    ];
 
-    for (let i = 0; i < 20; i++) {
-      movieList.push(<Movie key={i} />);
-    };
+    const movieList = moviesDB.map((movie, i) => {
+      return (
+        <Movie
+          key={i}
+          title={movie.name}
+          description={movie.description}
+          image={movie.image}
+        />
+      );
+    });
+
+    const likedMovies = [];
+
+    const likedCount = likedMovies.length;
+
+    let moviesLast = likedMovies.slice(-3);
+
+    if (likedCount === 0) {
+      moviesLast = 'No movies selected';
+    } else if (likedCount > 3) {
+      moviesLast = moviesLast.join(', ') + '...';
+    } else {
+      moviesLast = moviesLast.join(', ') + '.';
+    }
 
     return (
       <div>
@@ -59,7 +100,7 @@ class App extends Component {
             </span>
             <NavbarToggler onClick={this.toggleNavBar} />
             <Collapse isOpen={this.state.isOpenNavBar} navbar>
-              <Nav className='' navbar>
+              <Nav className='mr-auto' navbar>
                 <NavItem>
                   <NavLink href='#' style={{ color: '#FFFFFF' }}>
                     Last Releases
@@ -74,20 +115,21 @@ class App extends Component {
                   </NavLink>
                 </NavItem>
                 <Button
-                  id='Popover1'
+                  id='Popover'
                   onClick={this.togglePopOver}
                   color='secondary'
                 >
-                  11 movies
+                  {likedCount}
+                  {likedCount > 1 ? ' movies' : ' movie'}
                 </Button>
                 <Popover
                   placement='bottom'
                   isOpen={this.state.isOpenPopOver}
-                  target='Popover1'
+                  target='Popover'
                   toggle={this.togglePopOver}
                 >
                   <PopoverHeader>Last Movies</PopoverHeader>
-                  <PopoverBody>Last liked</PopoverBody>
+                  <PopoverBody>{moviesLast}</PopoverBody>
                 </Popover>
               </Nav>
             </Collapse>
@@ -95,7 +137,9 @@ class App extends Component {
         </div>
 
         <Container>
-          <Row>{movieList}</Row>
+          <Row>
+            {movieList}
+          </Row>
         </Container>
       </div>
     );
