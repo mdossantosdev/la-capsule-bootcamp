@@ -20,28 +20,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpenNavBar: false,
-      isOpenPopOver: false
+      isOpenNavbar: false,
+      isOpenPopover: false,
+      showLiked: false
     };
   }
 
-  toggleNavBar = () => {
+  toggleNavbar = () => {
     this.setState({
-      isOpenNavBar: !this.state.isOpenNavBar,
+      isOpenNavbar: !this.state.isOpenNavbar,
     });
   }
 
-  togglePopOver = () => {
+  togglePopover = () => {
     this.setState({
-      isOpenPopOver: !this.state.isOpenPopOver,
+      isOpenPopover: !this.state.isOpenPopover,
     });
+  }
+
+  toggleMovies = (e) => {
+    if (e.target.name === 'favorites') {
+      this.setState({
+        showLiked: true
+      });
+    } else {
+      this.setState({
+        showLiked: false
+      });
+    }
   }
 
   render() {
     // Fake database
     const moviesDB = [
       {
-        name: "Life of Pi",
+        name: 'Life of Pi',
         description:
           "The story of an Indian boy named Pi, a zookeeper's son who finds himself in the company of a hyena, zebra, orangutan, and a Bengal tiger ...",
         image: '/pi.jpg',
@@ -64,9 +77,10 @@ class App extends Component {
       return (
         <Movie
           key={i}
+          image={movie.image}
           title={movie.name}
           description={movie.description}
-          image={movie.image}
+          showLiked={this.state.showLiked}
         />
       );
     });
@@ -98,35 +112,41 @@ class App extends Component {
                 alt='Logo My Moviz'
               />
             </span>
-            <NavbarToggler onClick={this.toggleNavBar} />
+            <NavbarToggler onClick={this.toggleNavbar} />
             <Collapse isOpen={this.state.isOpenNavBar} navbar>
               <Nav className='mr-auto' navbar>
                 <NavItem>
-                  <NavLink href='#' style={{ color: '#FFFFFF' }}>
+                  <NavLink
+                    href='#'
+                    style={{ color: '#ffffff' }}
+                    onClick={this.toggleMovies}
+                  >
                     Last Releases
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
                     href='#'
-                    style={{ color: '#FFFFFF', marginRight: 10 }}
+                    style={{ color: '#ffffff', marginRight: 10 }}
+                    name='favorites'
+                    onClick={this.toggleMovies}
                   >
                     Favorites
                   </NavLink>
                 </NavItem>
                 <Button
                   id='Popover'
-                  onClick={this.togglePopOver}
                   color='secondary'
+                  onClick={this.togglePopover}
                 >
                   {likedCount}
                   {likedCount > 1 ? ' movies' : ' movie'}
                 </Button>
                 <Popover
                   placement='bottom'
-                  isOpen={this.state.isOpenPopOver}
+                  isOpen={this.state.isOpenPopover}
                   target='Popover'
-                  toggle={this.togglePopOver}
+                  toggle={this.togglePopover}
                 >
                   <PopoverHeader>Last Movies</PopoverHeader>
                   <PopoverBody>{moviesLast}</PopoverBody>
@@ -137,9 +157,7 @@ class App extends Component {
         </div>
 
         <Container>
-          <Row>
-            {movieList}
-          </Row>
+          <Row>{movieList}</Row>
         </Container>
       </div>
     );
