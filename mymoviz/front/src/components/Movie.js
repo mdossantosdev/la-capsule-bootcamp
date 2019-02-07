@@ -19,13 +19,13 @@ class Movie extends Component {
   }
 
   handleClick = () => {
-    this.setState({
-      isLike: !this.state.isLike
-    });
+    const isLike = !this.state.isLike;
+    this.setState({ isLike });
+    this.props.onClick(isLike, this.props.title);
   }
 
   render() {
-    const { image, title, description } = this.props;
+    const { image, title, description, showLiked } = this.props;
 
     const styleHeart = {
       color: '#f7f7f7',
@@ -40,7 +40,7 @@ class Movie extends Component {
     }
 
     let display = null;
-    if (this.props.showLiked && !this.state.isLike) {
+    if (showLiked && !this.state.isLike) {
       display = 'none';
     }
 

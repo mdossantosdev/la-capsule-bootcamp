@@ -22,7 +22,9 @@ class App extends Component {
     this.state = {
       isOpenNavbar: false,
       isOpenPopover: false,
-      showLiked: false
+      showLiked: false,
+      likedMovies: [],
+      likedCount: 0,
     };
   }
 
@@ -30,27 +32,54 @@ class App extends Component {
     this.setState({
       isOpenNavbar: !this.state.isOpenNavbar,
     });
-  }
+  };
 
   togglePopover = () => {
     this.setState({
       isOpenPopover: !this.state.isOpenPopover,
     });
-  }
+  };
 
   toggleMovies = (e) => {
     if (e.target.name === 'favorites') {
       this.setState({
-        showLiked: true
+        showLiked: true,
       });
     } else {
       this.setState({
-        showLiked: false
+        showLiked: false,
+      });
+    }
+  };
+
+  handleClick = (isLike, name) => {
+    const movies = [...this.state.likedMovies];
+
+    if (isLike) {
+      movies.push(name);
+      this.setState({
+        likedCount: this.state.likedCount + 1,
+        likedMovies: movies
+      });
+    } else {
+      const index = movies.indexOf(name);
+      movies.splice(index, 1);
+      this.setState({
+        likedCount: this.state.likedCount - 1,
+        likedMovies: movies
       });
     }
   }
 
   render() {
+    const {
+      isOpenNavbar,
+      isOpenPopover,
+      showLiked,
+      likedMovies,
+      likedCount,
+    } = this.state;
+
     // Fake database
     const moviesDB = [
       {
@@ -80,14 +109,11 @@ class App extends Component {
           image={movie.image}
           title={movie.name}
           description={movie.description}
-          showLiked={this.state.showLiked}
+          showLiked={showLiked}
+          onClick={this.handleClick}
         />
       );
     });
-
-    const likedMovies = [];
-
-    const likedCount = likedMovies.length;
 
     let moviesLast = likedMovies.slice(-3);
 
@@ -113,12 +139,12 @@ class App extends Component {
               />
             </span>
             <NavbarToggler onClick={this.toggleNavbar} />
-            <Collapse isOpen={this.state.isOpenNavBar} navbar>
+            <Collapse isOpen={isOpenNavbar} navbar>
               <Nav className='mr-auto' navbar>
                 <NavItem>
                   <NavLink
                     href='#'
-                    style={{ color: '#ffffff' }}
+                    style={{ color: '#ffffff', marginRight: 10 }}
                     onClick={this.toggleMovies}
                   >
                     Last Releases
@@ -127,7 +153,7 @@ class App extends Component {
                 <NavItem>
                   <NavLink
                     href='#'
-                    style={{ color: '#ffffff', marginRight: 10 }}
+                    style={{ color: '#ffffff', marginRight: 20 }}
                     name='favorites'
                     onClick={this.toggleMovies}
                   >
@@ -139,12 +165,13 @@ class App extends Component {
                   color='secondary'
                   onClick={this.togglePopover}
                 >
-                  {likedCount}
-                  {likedCount > 1 ? ' movies' : ' movie'}
+                  {likedCount > 1
+                    ? `${likedCount} movies`
+                    : `${likedCount} movie`}
                 </Button>
                 <Popover
                   placement='bottom'
-                  isOpen={this.state.isOpenPopover}
+                  isOpen={isOpenPopover}
                   target='Popover'
                   toggle={this.togglePopover}
                 >
