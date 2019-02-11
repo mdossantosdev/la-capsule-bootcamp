@@ -13,6 +13,7 @@ import {
   PopoverHeader,
   PopoverBody,
 } from 'reactstrap';
+import axios from 'axios';
 import './App.css';
 import Movie from './components/Movie';
 
@@ -23,22 +24,59 @@ class App extends Component {
       isOpenNavbar: false,
       isOpenPopover: false,
       showLiked: false,
+      movies: [],
       likedMovies: [],
       likedCount: 0,
+      likedTitleList: []
     };
+  }
+
+  componentDidMount = () => {
+    this.getMovies();
+    this.getFavorites();
+  }
+
+  getMovies = () => {
+    axios.get('/movies')
+      .then(response => {
+        this.setState({
+          movies: response.data.movies
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  getFavorites = () => {
+    axios.get('/favorites')
+      .then(response => {
+        const likedTitle = response.data.movies.map(movie => {
+          return movie.title;
+        })
+
+        this.setState({
+          likedMovies: response.data.movies,
+          likedCount: response.data.movies.length,
+          likedTitleList: likedTitle
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   toggleNavbar = () => {
     this.setState({
       isOpenNavbar: !this.state.isOpenNavbar,
     });
-  };
+  }
 
   togglePopover = () => {
     this.setState({
       isOpenPopover: !this.state.isOpenPopover,
     });
-  };
+  }
 
   toggleMovies = (e) => {
     if (e.target.name === 'favorites') {
@@ -50,23 +88,23 @@ class App extends Component {
         showLiked: false,
       });
     }
-  };
+  }
 
   handleClick = (isLike, name) => {
-    const movies = [...this.state.likedMovies];
+    const movies = [...this.state.likedTitleList];
 
     if (isLike) {
       movies.push(name);
       this.setState({
         likedCount: this.state.likedCount + 1,
-        likedMovies: movies
+        likedTitleList: movies
       });
     } else {
       const index = movies.indexOf(name);
       movies.splice(index, 1);
       this.setState({
         likedCount: this.state.likedCount - 1,
-        likedMovies: movies
+        likedTitleList: movies
       });
     }
   }
@@ -76,46 +114,35 @@ class App extends Component {
       isOpenNavbar,
       isOpenPopover,
       showLiked,
+      movies,
       likedMovies,
       likedCount,
+      likedTitleList,
     } = this.state;
 
-    // Fake database
-    const moviesDB = [
-      {
-        name: 'Life of Pi',
-        description:
-          "The story of an Indian boy named Pi, a zookeeper's son who finds himself in the company of a hyena, zebra, orangutan, and a Bengal tiger ...",
-        image: '/pi.jpg',
-      },
-      {
-        name: 'Maleficent',
-        description:
-          'A beautiful, pure-hearted young woman, Maleficent has an idyllic life growing up in a peaceable forest kingdom, until one day when an invading army ...',
-        image: '/maleficent.jpg',
-      },
-      {
-        name: 'The Adventures of Tintin',
-        description:
-          'Intrepid young reporter, Tintin, and his loyal dog, Snowy, are thrust into a world of high adventure when they discover a ship carrying an explosive ...',
-        image: '/tintin.jpg',
-      },
-    ];
+    const movieList = movies.map((movie, i) => {
+      let isLiked = false;
+      for (const liked of likedMovies) {
+        if (movie.id === liked.movieId) {
+          isLiked = true;
+        }
+      }
 
-    const movieList = moviesDB.map((movie, i) => {
       return (
         <Movie
           key={i}
-          image={movie.image}
-          title={movie.name}
-          description={movie.description}
+          image={movie.poster_path}
+          title={movie.title}
+          description={movie.overview}
+          movieId={movie.id}
           showLiked={showLiked}
+          isLiked={isLiked}
           onClick={this.handleClick}
         />
       );
-    });
+    })
 
-    let moviesLast = likedMovies.slice(-3);
+    let moviesLast = likedTitleList.slice(-3);
 
     if (likedCount === 0) {
       moviesLast = 'No movies selected';

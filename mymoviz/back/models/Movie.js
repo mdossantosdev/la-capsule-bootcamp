@@ -4,7 +4,7 @@ const MovieSchema = mongoose.Schema({
   title: String,
   overview: String,
   poster_path: String,
-  idMovieDB: Number
+  movieId: Number
 });
 
 const MovieModel = mongoose.model('movies', MovieSchema);

@@ -33,7 +33,7 @@ router.post('/add-favorites', (req, res) => {
     title: req.body.title,
     overview: req.body.overview,
     poster_path: req.body.poster_path,
-    idMovieDB: req.body.idMovieDB,
+    movieId: req.body.movieId
   });
 
   newMovie.save((error, movie) => {
@@ -44,7 +44,7 @@ router.post('/add-favorites', (req, res) => {
 /* DELETE */
 router.delete('/favorites/:movieId', (req, res) => {
   movieModel.deleteOne(
-    { idMovieDB: req.params.movieId },
+    { movieId: req.params.movieId },
     (error, response) => {
       res.json({ result: true });
     }
