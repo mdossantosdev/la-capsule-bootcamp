@@ -51,10 +51,10 @@ const MainNavigator = createBottomTabNavigator(
 
 const StackNavigator = createStackNavigator(
   {
-    MainNavigator: MainNavigator,
     Home: HomeScreen,
     SignIn: SignInScreen,
     SignUp: SignUpScreen,
+    MainNavigator: MainNavigator,
   },
   { headerMode: 'none' }
 );

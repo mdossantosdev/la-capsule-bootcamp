@@ -1,25 +1,39 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default class FollowingScreen extends Component {
+class FollowingScreen extends Component {
   render() {
-    return (
-      <ScrollView style={styles.container}>
+    const contactListItem = this.props.contacts.map((contact, i) => {
+      return (
         <ListItem
+          key={i}
           leftAvatar={{
-            source: { uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' },
-            title: 'EC',
+            source: { uri: contact.avatar },
+            title: `${contact.firstName[0]}${contact.lastName[0]}`,
             rounded: true
           }}
-          title='Emilie Carpenter'
+          title={`${contact.firstName} ${contact.lastName}`}
           subtitle={
             <View>
-              <Text style={styles.text}>emily.carpenter@gmail.com</Text>
-              <Text style={styles.text}>Deckow-Crist</Text>
+              <Text style={styles.text}>{contact.email}</Text>
+              <Text style={styles.text}>{contact.company}</Text>
             </View>
           }
         />
+      );
+    });
+
+    return (
+      <ScrollView style={styles.container}>
+        {this.props.contacts.length < 1 ? (
+          <Text style={{ textAlign: 'center' }}>
+            You are not following any contact
+          </Text>
+        ) : (
+          contactListItem.reverse()
+        )}
       </ScrollView>
     );
   }
@@ -35,3 +49,14 @@ const styles = StyleSheet.create({
     color: 'grey',
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    contacts: state.contact
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(FollowingScreen);
