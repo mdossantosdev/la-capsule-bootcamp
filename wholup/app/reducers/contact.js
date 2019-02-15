@@ -2,18 +2,18 @@ const ADD_CONTACT = 'ADD_CONTACT';
 
 export default (state = [], action) => {
   if (action.type === ADD_CONTACT) {
-    let contactListCopy = [...state];
+    let contactList = [...state];
     let userExist = false;
 
-    for (let contact of contactListCopy) {
+    for (let contact of contactList) {
       if (contact.email === action.email) {
         userExist = true;
-        return contactListCopy;
+        return contactList;
       }
     }
 
     if (!userExist) {
-      contactListCopy.push({
+      contactList.push({
         firstName: action.firstName,
         lastName: action.lastName,
         email: action.email,
@@ -22,7 +22,7 @@ export default (state = [], action) => {
       });
     }
 
-    return contactListCopy;
+    return contactList;
   } else {
     return state;
   }

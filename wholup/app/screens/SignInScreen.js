@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { url } from '../config';
 
-export default class SignInScreen extends Component {
+class SignInScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +29,9 @@ export default class SignInScreen extends Component {
       .post(`${url}/signin`, body, config)
       .then((response) => {
         if (response.data.isUser) {
+          const { user } = response.data;
+
+          this.props.handleUser(user.first_name, user.last_name, user.email);
           this.props.navigation.navigate('Account');
         } else {
           this.setState({ error: 'User or password is incorrect!' });
@@ -78,3 +82,21 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleUser: (firstName, lastName, email) => {
+      dispatch({
+        type: 'SET_USER',
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      });
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignInScreen);

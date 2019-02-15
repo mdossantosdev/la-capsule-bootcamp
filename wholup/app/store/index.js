@@ -2,10 +2,12 @@ import { createStore, combineReducers } from 'redux';
 
 // Import reducers
 import contact from '../reducers/contact';
+import user from '../reducers/user';
 
 // Combine reducers
 const rootReducer = combineReducers({
-  contact
+  contact,
+  user
 });
 
 // Create store

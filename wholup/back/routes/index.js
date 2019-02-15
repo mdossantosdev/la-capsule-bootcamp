@@ -14,11 +14,11 @@ router.post('/signin', (req, res) => {
       email: req.body.email,
       password: req.body.password,
     },
-    (error, data) => {
-      if (!data) {
+    (error, user) => {
+      if (!user) {
         res.json({ result: false, isUser: false });
       } else {
-        res.json({ result: true, isUser: true });
+        res.json({ result: true, isUser: true, user });
       }
     }
   );
