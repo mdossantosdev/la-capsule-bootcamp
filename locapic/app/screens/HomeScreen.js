@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { AuthSession } from 'expo';
-import { FB_AUTH_URL } from '../config';
+import { API_URL } from '../config';
 
 class HomeScreen extends Component {
 
@@ -11,7 +11,7 @@ class HomeScreen extends Component {
     const redirectUrl = AuthSession.getRedirectUrl();
 
     const result = await AuthSession.startAsync({
-      authUrl: FB_AUTH_URL,
+      authUrl: `${API_URL}/auth/facebook`,
     });
 
     this.props.signin(result.params);

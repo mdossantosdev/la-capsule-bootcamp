@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const UserModel = require('../models/User');
 
 /* GET */
 router.get('/', (req, res) => {
@@ -27,5 +28,34 @@ router.get(
     );
   }
 );
+
+router.get('/locationLog', (req, res) => {
+  UserModel.findOne(
+    { facebookid: req.query.facebookid },
+    (err, user) => {
+    if (user) {
+      res.json({ locationHistory: user.locationHistory });
+    } else {
+      res.json({ locationHistory: [] });
+    }
+  });
+});
+
+/* POST */
+router.post('/locationLog', (req, res) => {
+  UserModel.findOne(
+    { facebookid: req.body.facebookid },
+    (err, user) => {
+    if (user) {
+      user.locationHistory.push({
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+      });
+
+      user.save();
+      res.json({ result: true });
+    }
+  });
+});
 
 module.exports = router;

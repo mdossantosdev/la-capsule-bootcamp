@@ -7,6 +7,10 @@ const logger = require('morgan');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
+// DB connexion
+require('./config/database');
+const UserModel = require('./models/User');
+
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -21,7 +25,20 @@ passport.use(
       profileFields: ['id', 'first_name', 'last_name', 'email'],
     },
     (accessToken, refreshToken, profile, done) => {
-      return done(null, profile._json);
+      UserModel.findOne(
+        { facebookid: profile._json.id },
+        (err, user) => {
+        if (!user) {
+          const newUser = new UserModel({
+            firstname: profile._json.first_name,
+            lastname: profile._json.last_name,
+            email: profile._json.email,
+            facebookid: profile._json.id,
+          });
+          newUser.save();
+        }
+        return done(null, profile._json);
+      });
     }
   )
 );
