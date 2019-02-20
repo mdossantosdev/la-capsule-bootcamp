@@ -11,7 +11,7 @@ class HomeScreen extends Component {
     const redirectUrl = AuthSession.getRedirectUrl();
 
     const result = await AuthSession.startAsync({
-      authUrl: `${API_URL}/auth/facebook`,
+      authUrl: `${API_URL}/auth/facebook?redirectUrl=${redirectUrl}`,
     });
 
     this.props.signin(result.params);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
-import { Location } from 'expo';
+import { Location, Permissions } from 'expo';
 import { connect } from 'react-redux';
 import { API_URL } from '../config';
 
@@ -13,14 +13,24 @@ class MapScreen extends Component {
       currentLocation: { latitude: 0, longitude: 0 },
       locationLog: [],
       displayHistory: true,
+      errorMessage: '',
     };
   }
 
   componentDidMount = () => {
-    this.location();
+    this._getLocation();
+    this._getLocationHistory();
   };
 
-  location = () => {
+  _getLocation = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
     Location.watchPositionAsync({ distanceInterval: 5 }, (location) => {
       if (
         this.state.currentLocation.latitude != 0 &&
@@ -52,7 +62,9 @@ class MapScreen extends Component {
       };
       this.setState({ currentLocation });
     });
+  };
 
+  _getLocationHistory = () => {
     fetch(`${API_URL}/locationLog?facebookid=${this.props.user.facebookid}`)
       .then((response) => {
         return response.json();
@@ -105,7 +117,9 @@ class MapScreen extends Component {
 
         <Button
           title='History'
-          onPress={() => this.setState({ displayHistory: !this.state.displayHistory })}
+          onPress={() =>
+            this.setState({ displayHistory: !this.state.displayHistory })
+          }
         />
       </View>
     );

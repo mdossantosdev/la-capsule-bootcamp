@@ -22,12 +22,12 @@ passport.use(
       clientSecret: process.env.FB_CLIENT_SECRET,
       callbackURL: process.env.FB_CALLBACK_URL,
 
-      profileFields: ['id', 'first_name', 'last_name', 'email'],
+      profileFields: ['id', 'first_name', 'last_name', 'email', 'picture'],
+
+      passReqToCallback: true,
     },
-    (accessToken, refreshToken, profile, done) => {
-      UserModel.findOne(
-        { facebookid: profile._json.id },
-        (err, user) => {
+    (req, accessToken, refreshToken, profile, done) => {
+      UserModel.findOne({ facebookid: profile._json.id }, (err, user) => {
         if (!user) {
           const newUser = new UserModel({
             firstname: profile._json.first_name,
@@ -37,7 +37,9 @@ passport.use(
           });
           newUser.save();
         }
-        return done(null, profile._json);
+
+        const state = JSON.parse(req.query.state);
+        return done(null, { ...profile._json, redirectUrl: state.redirectUrl });
       });
     }
   )
