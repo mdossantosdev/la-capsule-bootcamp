@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { Camera, Permissions } from 'expo';
+import { API_URL } from '../config';
 
 export default class CameraScreen extends Component {
   constructor(props) {
@@ -9,25 +10,36 @@ export default class CameraScreen extends Component {
       permision: null,
       type: Camera.Constants.Type.back,
     };
-  };
+  }
 
   componentDidMount = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    const permision = (status === 'granted') ? true : false;
+    const permision = status === 'granted' ? true : false;
     this.setState({ permision });
   };
 
   onPictureSaved = async (photo) => {
-    console.log(photo.uri);
-    console.log(photo.width);
-    console.log(photo.height);
-    console.log(photo.exif);
-    console.log(photo.base64);
+    const data = new FormData();
+
+    data.append('photo', {
+      uri: photo.uri,
+      type: 'image/jpeg',
+      name: 'image',
+    });
+
+    await fetch(`${API_URL}/upload`, {
+      method: 'POST',
+      body: data,
+    }).then((res) => {
+      console.log(res);
+    });
   };
 
   render() {
     if (this.state.permision === null) {
-      return <View style={styles.container}></View>;
+      return (
+        <View style={styles.container}></View>
+      )
     } else if (this.state.permision === false) {
       return (
         <View style={styles.container}>

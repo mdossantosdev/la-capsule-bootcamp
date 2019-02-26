@@ -1,0 +1,20 @@
+{
+  "name": "faceup-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cloudinary": "^1.13.2",
+    "cookie-parser": "~1.4.3",
+    "dotenv": "~6.2.0",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-fileupload": "^1.1.1-alpha.3",
+    "http-errors": "~1.7.1",
+    "mongoose": "~5.4.15",
+    "morgan": "~1.9.0"
+  },
+  "license": "MIT"
+}
