@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { Camera, Permissions } from 'expo';
+import { connect } from 'react-redux';
 import { API_URL } from '../config';
 
-export default class CameraScreen extends Component {
+class CameraScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,16 +31,26 @@ export default class CameraScreen extends Component {
     await fetch(`${API_URL}/upload`, {
       method: 'POST',
       body: data,
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((image) => {
+        this.props.handleImage(
+          image.data.url,
+          image.data.name,
+          image.data.age,
+          image.data.gender
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
     if (this.state.permision === null) {
-      return (
-        <View style={styles.container}></View>
-      )
+      return <View style={styles.container}></View>;
     } else if (this.state.permision === false) {
       return (
         <View style={styles.container}>
@@ -83,3 +94,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleImage: (imageUrl, imageName, imageAge, imageGender) => {
+      dispatch({
+        type: 'TAKE_IMAGE',
+        imageUrl: imageUrl,
+        imageName: imageName,
+        imageAge: imageAge,
+        imageGender: imageGender,
+      });
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CameraScreen);

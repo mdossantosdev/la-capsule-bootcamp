@@ -1,47 +1,23 @@
 import React, { Component } from 'react';
 import { ImageBackground, View, FlatList, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import Modal from '../components/Modal';
 
-export default class LibraryScreen extends Component {
-  render() {
-    const list = [
-      {
-        img:
-          'https://images.unsplash.com/photo-1531251445707-1f000e1e87d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2681&q=80',
-        gender: 'Female',
-        age: 26,
-        eyes: 'Brown',
-        glasses: 'No',
-      },
-      {
-        img:
-          'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-        gender: 'Male',
-        age: 35,
-        eyes: 'Brown',
-        glasses: 'Yes',
-      },
-      {
-        img:
-          'https://images.unsplash.com/photo-1519362909365-f8591adb630e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-        gender: 'Female',
-        age: 24,
-        eyes: 'Blue',
-        glasses: 'Yes',
-      },
-    ];
+class LibraryScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
 
+  render() {
     const keyExtractor = (item, index) => index.toString();
 
     const renderItem = ({ item, index }) => (
       <Modal
         item={index + 1}
         key={index}
-        img={item.img}
-        gender={item.gender}
-        age={item.age}
-        eyes={item.eyes}
-        glasses={item.glasses}
+        img={item.imageUrl}
+        gender={item.imageGender}
+        age={item.imageAge}
       />
     );
 
@@ -53,7 +29,7 @@ export default class LibraryScreen extends Component {
         <View style={styles.container}>
           <FlatList
             keyExtractor={keyExtractor}
-            data={list}
+            data={this.props.images}
             renderItem={renderItem}
           />
         </View>
@@ -69,3 +45,14 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    images: state.image,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(LibraryScreen);
