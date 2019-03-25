@@ -9,6 +9,7 @@ import Project from './Project';
 class Home extends Component {
   componentDidMount = () => {
     this.getProjects();
+    this.getFavorites();
   };
 
   getProjects = () => {
@@ -20,6 +21,20 @@ class Home extends Component {
       .catch((error) => {
         console.log('Request failed', error);
       });
+  };
+
+  getFavorites = () => {
+    axios
+      .get('http://localhost:5000/myprojects')
+      .then((response) => {
+        const favorites = response.data.projects;
+        favorites.forEach(project => {
+          this.props.getFavorites({ ...project, favorites: true })
+        })
+      })
+      .catch((error) => {
+        console.log('Request failed', error);
+      })
   };
 
   render() {
@@ -52,7 +67,8 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    projects: state.project.projects
+    projects: state.project.projects,
+    favorites: state.project.favorites
   }
 }
 
@@ -62,6 +78,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: 'GET_PROJECTS',
         payload: projects
+      })
+    },
+    getFavorites: (favorites) => {
+      dispatch({
+        type: 'GET_FAVORITES',
+        payload: favorites
       })
     }
   }
