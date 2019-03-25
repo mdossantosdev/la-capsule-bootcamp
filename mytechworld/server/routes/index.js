@@ -14,12 +14,34 @@ router.get('/projects', (req, res) => {
 });
 
 router.get('/myprojects', (req, res) => {
-  projectModel.find((err, projects) => {
-    if (err) {
-      console.log('Error', err);
+  projectModel.find((error, projects) => {
+    if (error) {
+      console.log('Error', error);
     }
     res.json({ result: true, projects: projects });
   });
+});
+
+/* POST */
+router.post('/myproject', (req, res) => {
+  const project = {
+    idproject: req.body.idproject,
+    name: req.body.name,
+    desc: req.body.desc,
+    pic_url: req.body.pic_url,
+    stack_front: req.body.stack_front,
+    stack_back: req.body.stack_back,
+    days_spent: req.body.days_spent,
+  };
+
+  const newProject = new projectModel(project);
+
+  newProject.save((error, project) => {
+    if (error) {
+      console.log('Error', error);
+    }
+    res.json({ result: true, project: project})
+  })
 });
 
 module.exports = router;
