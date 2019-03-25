@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import { Container, Row } from 'reactstrap';
+import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Jumbotron from './Jumbotron';
 import Project from './Project';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      projects: [],
-    }
   }
 
   componentDidMount = () => {
+    this.getProjects();
+  }
+
+  getProjects = () => {
     fetch('http://localhost:5000/projects')
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        this.setState({ projects: data.projects });
+        this.props.getProjects(data.projects);
       })
       .catch((error) => {
         console.log('Request failed', error);
@@ -26,7 +28,7 @@ export default class Home extends Component {
   }
 
   render() {
-    let renderProjects = this.state.projects.map((project, i) => {
+    let renderProjects = this.props.projects.map((project, i) => {
       return (
         <Project
           key={i}
@@ -53,3 +55,25 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    projects: state.project.projects
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProjects: (projects) => {
+      dispatch({
+        type: 'GET_PROJECTS',
+        payload: projects
+      })
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
