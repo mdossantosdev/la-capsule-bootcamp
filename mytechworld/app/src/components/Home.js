@@ -29,19 +29,8 @@ class Home extends Component {
       .then((response) => {
         const favorites = response.data.projects;
 
-        const projectSort = (array, id) => {
-          const projects = array.map((project) => {
-            if (project.id_project === id) {
-              return { ...project, favorites: true }
-            } else {
-              return project
-            }
-          });
-          this.props.addFavorites(projects)
-        }
-
         favorites.forEach(item => {
-          projectSort(this.props.projects, item.id_project)
+          this.props.addFavorites(item.id_project)
         })
       })
       .catch((error) => {
@@ -78,10 +67,10 @@ const mapDispatchToProps = (dispatch) => {
         payload: projects
       })
     },
-    addFavorites: (projects) => {
+    addFavorites: (projectId) => {
       dispatch({
         type: 'ADD_FAVORITES',
-        payload: projects
+        payload: projectId
       })
     }
   }

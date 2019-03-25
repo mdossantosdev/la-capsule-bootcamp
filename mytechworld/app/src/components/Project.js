@@ -31,7 +31,8 @@ class Project extends Component {
     axios
       .post('http://localhost:5000/myprojects', project)
       .then((response) => {
-        console.log(response.data.project);
+        const projectId = response.data.project.id_project;
+        this.props.addFavorites(projectId);
       })
       .catch((error) => {
         console.log(error);
@@ -127,9 +128,20 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFavorites: (projectId) => {
+      dispatch({
+        type: 'ADD_FAVORITES',
+        payload: projectId
+      })
+    }
+  }
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Project);
 
 const styles = {
