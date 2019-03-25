@@ -12,19 +12,20 @@ import {
   CardBody,
   Progress,
 } from 'reactstrap';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class Project extends Component {
 
   addToFavorites = () => {
     const project = {
-      id_project: this.props.projectId,
-      name: this.props.name,
-      description: this.props.description,
-      picture: this.props.picture,
-      stack_front: this.props.stackFront,
-      stack_back: this.props.stackBack,
-      days_spent: this.props.daysSpent,
+      id_project: this.props.project.id_project,
+      name: this.props.project.name,
+      description: this.props.project.desc,
+      picture: this.props.project.pic_url,
+      stack_front: this.props.project.stack_front,
+      stack_back: this.props.project.stack_back,
+      days_spent: this.props.project.days_spent,
     };
 
     axios
@@ -38,7 +39,7 @@ class Project extends Component {
   }
 
   render() {
-    const stackFront = this.props.stackFront.map((item, i) => {
+    const stackFront = this.props.project.stack_front.map((item, i) => {
       return (
         <Badge
           key={i}
@@ -50,7 +51,7 @@ class Project extends Component {
       )
     });
 
-    const stackBack = this.props.stackBack.map((item, i) => {
+    const stackBack = this.props.project.stack_back.map((item, i) => {
       return (
         <Badge
           key={i}
@@ -66,42 +67,52 @@ class Project extends Component {
         <Card style={styles.card}>
           <CardImg
             width='100%'
-            src={this.props.picture}
+            src={this.props.project.pic_url}
             alt='Project logo'
             style={styles.img}
           />
           <CardBody>
-            <CardTitle style={styles.name}>{this.props.name}</CardTitle>
+            <CardTitle style={styles.name}>{this.props.project.name}</CardTitle>
             <CardText style={styles.description}>
-              {this.props.description}
+              {this.props.project.desc}
             </CardText>
 
             <CardSubtitle style={styles.stackTitle}>Stack Front</CardSubtitle>
             <div style={styles.badgeContainer}>{stackFront}</div>
 
-            {this.props.stackBack.length !== 0 ? (
+            {this.props.project.stack_back.length !== 0 ? (
               <CardSubtitle style={styles.stackTitle}>Stack Back</CardSubtitle>
             ) : null}
             <div style={styles.badgeContainer}>{stackBack}</div>
 
             <CardText style={styles.days}>
-              {this.props.daysSpent}/5 days spent
+              {this.props.project.days_spent}/5 days spent
             </CardText>
             <Progress
               color='secondary'
               max={5}
-              value={this.props.daysSpent}
+              value={this.props.project.days_spent}
               style={styles.progress}
             />
 
             <Row className='d-flex justify-content-center flex-wrap'>
-              <Button
-                outline
-                style={styles.btn}
-                onClick={() => this.addToFavorites()}
-              >
-                + Favorite
-              </Button>
+              {this.props.project.favorites ? (
+                <Button
+                  color='secondary'
+                  style={styles.btn}
+                >
+                  - Favorite
+                </Button>
+              ) : (
+                <Button
+                  outline
+                  color='secondary'
+                  style={styles.btn}
+                  onClick={() => this.addToFavorites()}
+                >
+                  + Favorite
+                </Button>
+              )}
             </Row>
           </CardBody>
         </Card>
@@ -110,12 +121,20 @@ class Project extends Component {
   }
 }
 
-export default Project;
+const mapStateToProps = (state) => {
+  return {
+    projects: state.project.projects
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Project);
 
 const styles = {
   card: {
     minHeight: '800px',
-    minWidth: '300px',
     marginBottom: '20px',
   },
   img: {

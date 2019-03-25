@@ -1,9 +1,8 @@
 const GET_PROJECTS = 'GET_PROJECTS';
-const GET_FAVORITES = 'GET_FAVORITES';
+const ADD_FAVORITES = 'ADD_FAVORITES';
 
 const initialState = {
   projects: [],
-  favorites: []
 }
 
 export default (state = initialState, action) => {
@@ -13,10 +12,10 @@ export default (state = initialState, action) => {
         ...state,
         projects: action.payload
       }
-    case GET_FAVORITES:
+    case ADD_FAVORITES:
       return {
         ...state,
-        favorites: action.payload
+        projects: action.payload
       }
     default:
       return state

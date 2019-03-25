@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Jumbotron from './Jumbotron';
-import Project from './Project';
+import Projects from './Projects';
 
 class Home extends Component {
   componentDidMount = () => {
@@ -28,8 +28,20 @@ class Home extends Component {
       .get('http://localhost:5000/myprojects')
       .then((response) => {
         const favorites = response.data.projects;
-        favorites.forEach(project => {
-          this.props.getFavorites({ ...project, favorites: true })
+
+        const projectSort = (array, id) => {
+          const projects = array.map((project) => {
+            if (project.id_project === id) {
+              return { ...project, favorites: true }
+            } else {
+              return project
+            }
+          });
+          this.props.addFavorites(projects)
+        }
+
+        favorites.forEach(item => {
+          projectSort(this.props.projects, item.id_project)
         })
       })
       .catch((error) => {
@@ -38,27 +50,14 @@ class Home extends Component {
   };
 
   render() {
-    let renderProjects = this.props.projects.map((project, i) => {
-      return (
-        <Project
-          key={i}
-          projectId={project.id_project}
-          name={project.name}
-          description={project.desc}
-          picture={project.pic_url}
-          stackFront={project.stack_front}
-          stackBack={project.stack_back}
-          daysSpent={project.days_spent}
-        />
-      );
-    });
-
     return (
       <div>
         <NavBar />
         <Jumbotron />
         <Container>
-          <Row>{renderProjects}</Row>
+          <Row>
+            <Projects projects={this.props.projects} />
+          </Row>
         </Container>
       </div>
     );
@@ -68,7 +67,6 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     projects: state.project.projects,
-    favorites: state.project.favorites
   }
 }
 
@@ -80,10 +78,10 @@ const mapDispatchToProps = (dispatch) => {
         payload: projects
       })
     },
-    getFavorites: (favorites) => {
+    addFavorites: (projects) => {
       dispatch({
-        type: 'GET_FAVORITES',
-        payload: favorites
+        type: 'ADD_FAVORITES',
+        payload: projects
       })
     }
   }
