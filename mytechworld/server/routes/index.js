@@ -25,10 +25,10 @@ router.get('/myprojects', (req, res) => {
 /* POST */
 router.post('/myproject', (req, res) => {
   const project = {
-    idproject: req.body.idproject,
+    id_project: req.body.id_project,
     name: req.body.name,
-    desc: req.body.desc,
-    pic_url: req.body.pic_url,
+    description: req.body.description,
+    picture: req.body.picture,
     stack_front: req.body.stack_front,
     stack_back: req.body.stack_back,
     days_spent: req.body.days_spent,
@@ -42,6 +42,19 @@ router.post('/myproject', (req, res) => {
     }
     res.json({ result: true, project: project})
   })
+});
+
+/* DELETE */
+router.delete('/myproject/:projectId', (req, res) => {
+  projectModel.deleteOne(
+    { id_project: req.params.projectId },
+    (error, response) => {
+      if (error) {
+        console.log('Error', error);
+      }
+      res.json({ result: true })
+    }
+  )
 });
 
 module.exports = router;
