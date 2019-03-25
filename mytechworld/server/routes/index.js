@@ -13,4 +13,13 @@ router.get('/projects', (req, res) => {
   res.json({ result: true, projects: projects });
 });
 
+router.get('/myprojects', (req, res) => {
+  projectModel.find((err, projects) => {
+    if (err) {
+      console.log('Error', err);
+    }
+    res.json({ result: true, projects: projects });
+  });
+});
+
 module.exports = router;
