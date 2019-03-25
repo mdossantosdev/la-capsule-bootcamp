@@ -1,9 +1,11 @@
 const GET_PROJECTS = 'GET_PROJECTS';
 const ADD_FAVORITES = 'ADD_FAVORITES';
 const REMOVE_FAVORITES = 'REMOVE_FAVORITES';
+const DISPLAY_FAVORITES = 'DISPLAY_FAVORITES';
 
 const initialState = {
   projects: [],
+  displayFavorites: false
 }
 
 const addFavorites = (projects, idProject) => {
@@ -42,6 +44,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         projects: removeFavorites(state.projects, action.payload)
+      }
+    case DISPLAY_FAVORITES:
+      return {
+        ...state,
+        displayFavorites: action.payload
       }
     default:
       return state

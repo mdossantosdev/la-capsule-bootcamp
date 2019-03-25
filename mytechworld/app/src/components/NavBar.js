@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -9,7 +10,7 @@ import {
   NavLink,
 } from 'reactstrap';
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,11 +34,15 @@ export default class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav navbar>
-              <NavItem>
-                <NavLink href='/'>The projects</NavLink>
+              <NavItem style={{ cursor: 'pointer' }}>
+                <NavLink onClick={() => this.props.displayFavorites(false)}>
+                  The projects
+                </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href='/'>TOP 3</NavLink>
+              <NavItem style={{ cursor: 'pointer' }}>
+                <NavLink onClick={() => this.props.displayFavorites(true)}>
+                  TOP 3
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
@@ -46,6 +51,22 @@ export default class NavBar extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    displayFavorites: (isDisplay) => {
+      dispatch({
+        type: 'DISPLAY_FAVORITES',
+        payload: isDisplay
+      })
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NavBar);
 
 const styles = {
   brand: {
