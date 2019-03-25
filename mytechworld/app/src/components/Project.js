@@ -31,8 +31,24 @@ class Project extends Component {
     axios
       .post('http://localhost:5000/myprojects', project)
       .then((response) => {
-        const projectId = response.data.project.id_project;
-        this.props.addFavorites(projectId);
+        if (response.data.result) {
+          const projectId = response.data.project.id_project;
+          this.props.addFavorites(projectId);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  removeToFavorites = () => {
+    axios
+      .delete(`http://localhost:5000/myprojects/${this.props.project.id_project}`)
+      .then((response) => {
+        if (response.data.result) {
+          const projectId = this.props.project.id_project;
+          this.props.removeFavorites(projectId);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -101,6 +117,7 @@ class Project extends Component {
                 <Button
                   color='secondary'
                   style={styles.btn}
+                  onClick={() => this.removeToFavorites()}
                 >
                   - Favorite
                 </Button>
@@ -133,6 +150,12 @@ const mapDispatchToProps = (dispatch) => {
     addFavorites: (projectId) => {
       dispatch({
         type: 'ADD_FAVORITES',
+        payload: projectId
+      })
+    },
+    removeFavorites: (projectId) => {
+      dispatch({
+        type: 'REMOVE_FAVORITES',
         payload: projectId
       })
     }
