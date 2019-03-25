@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Jumbotron from './Jumbotron';
 import Projects from './Projects';
+import Footer from './Footer';
 
 class Home extends Component {
   componentDidMount = () => {
@@ -48,6 +49,7 @@ class Home extends Component {
             <Projects projects={this.props.projects} />
           </Row>
         </Container>
+        <Footer />
       </div>
     );
   }
