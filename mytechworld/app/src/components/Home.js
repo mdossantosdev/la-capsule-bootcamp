@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
 import { Container, Row } from 'reactstrap';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Jumbotron from './Jumbotron';
 import Project from './Project';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount = () => {
     this.getProjects();
   }
 
   getProjects = () => {
-    fetch('http://localhost:5000/projects')
+    axios.get('http://localhost:5000/projects')
       .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        this.props.getProjects(data.projects);
+        this.props.getProjects(response.data.projects);
       })
       .catch((error) => {
         console.log('Request failed', error);
-      });
+      })
   }
 
   render() {
