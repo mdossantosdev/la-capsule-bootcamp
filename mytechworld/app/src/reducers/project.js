@@ -1,7 +1,7 @@
 const GET_PROJECTS = 'GET_PROJECTS';
 
 const initialState = {
-  projects: []
+  projects: [],
 }
 
 export default (state = initialState, action) => {

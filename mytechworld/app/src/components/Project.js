@@ -12,8 +12,31 @@ import {
   CardBody,
   Progress,
 } from 'reactstrap';
+import axios from 'axios';
 
 class Project extends Component {
+
+  addToFavorites = () => {
+    const project = {
+      id_project: this.props.projectId,
+      name: this.props.name,
+      description: this.props.description,
+      picture: this.props.picture,
+      stack_front: this.props.stackFront,
+      stack_back: this.props.stackBack,
+      days_spent: this.props.daysSpent,
+    };
+
+    axios
+      .post('http://localhost:5000/myprojects', project)
+      .then((response) => {
+        console.log(response.data.project);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   render() {
     const stackFront = this.props.stackFront.map((item, i) => {
       return (
@@ -72,7 +95,11 @@ class Project extends Component {
             />
 
             <Row className='d-flex justify-content-center flex-wrap'>
-              <Button outline style={styles.btn}>
+              <Button
+                outline
+                style={styles.btn}
+                onClick={() => this.addToFavorites()}
+              >
                 + Favorite
               </Button>
             </Row>

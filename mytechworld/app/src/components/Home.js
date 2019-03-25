@@ -7,26 +7,27 @@ import Jumbotron from './Jumbotron';
 import Project from './Project';
 
 class Home extends Component {
-
   componentDidMount = () => {
     this.getProjects();
-  }
+  };
 
   getProjects = () => {
-    axios.get('http://localhost:5000/projects')
+    axios
+      .get('http://localhost:5000/projects')
       .then((response) => {
         this.props.getProjects(response.data.projects);
       })
       .catch((error) => {
         console.log('Request failed', error);
-      })
-  }
+      });
+  };
 
   render() {
     let renderProjects = this.props.projects.map((project, i) => {
       return (
         <Project
           key={i}
+          projectId={project.id_project}
           name={project.name}
           description={project.desc}
           picture={project.pic_url}
@@ -42,9 +43,7 @@ class Home extends Component {
         <NavBar />
         <Jumbotron />
         <Container>
-          <Row>
-            {renderProjects}
-          </Row>
+          <Row>{renderProjects}</Row>
         </Container>
       </div>
     );

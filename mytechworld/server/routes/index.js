@@ -23,7 +23,7 @@ router.get('/myprojects', (req, res) => {
 });
 
 /* POST */
-router.post('/myproject', (req, res) => {
+router.post('/myprojects', (req, res) => {
   const project = {
     id_project: req.body.id_project,
     name: req.body.name,
@@ -45,7 +45,7 @@ router.post('/myproject', (req, res) => {
 });
 
 /* DELETE */
-router.delete('/myproject/:projectId', (req, res) => {
+router.delete('/myprojects/:projectId', (req, res) => {
   projectModel.deleteOne(
     { id_project: req.params.projectId },
     (error, response) => {
