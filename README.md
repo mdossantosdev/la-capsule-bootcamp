@@ -77,6 +77,17 @@ React Native • Expo • Redux • React Native Elements • React Navigation
 ##### Server
 Node/Express • MongoDB • Mongoose • Cloudinary • Azure AI Face Detect • API
 
+## Final Exam
+
+MyTechWorld is a full-stack application directly connected to an API to retrieve projects information.
+
+### Tech
+
+##### Web App
+React • Reactstrap • Redux • Axios
+
+##### Server
+Node/Express • MongoDB • Mongoose • API
 ## © License
 
 This project is licensed under the [MIT license](LICENSE).
